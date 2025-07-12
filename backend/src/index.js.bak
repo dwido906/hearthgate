@@ -1,0 +1,30 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const apiLimiter = require('./middleware/rateLimiter');
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/hearthgate';
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Apply rate limiting to all requests
+app.use(apiLimiter);
+
+// Database connection
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('Could not connect to MongoDB', err));
+
+// Basic route
+app.get('/api/status', (req, res) => {
+  res.json({ status: 'ok', message: 'Hearthgate API is running!' });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
