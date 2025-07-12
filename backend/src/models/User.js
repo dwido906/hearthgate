@@ -25,6 +25,88 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
+  platforms: {
+    discord: {
+      connected: { type: Boolean, default: false },
+      data: {
+        id: String,
+        username: String,
+        discriminator: String,
+        avatar: String,
+        nitro: Boolean,
+        guilds: Array,
+        lastSync: Date
+      },
+      accessToken: String,
+      refreshToken: String,
+      lastSync: Date
+    },
+    steam: {
+      connected: { type: Boolean, default: false },
+      data: {
+        steamId: String,
+        profileName: String,
+        avatar: String,
+        games: Array,
+        achievements: Array,
+        playtime: Number,
+        lastSync: Date
+      },
+      lastSync: Date
+    },
+    epic: {
+      connected: { type: Boolean, default: false },
+      data: {
+        accountId: String,
+        displayName: String,
+        games: Array,
+        stats: Object,
+        lastSync: Date
+      },
+      accessToken: String,
+      refreshToken: String,
+      lastSync: Date
+    },
+    riot: {
+      connected: { type: Boolean, default: false },
+      data: {
+        puuid: String,
+        gameName: String,
+        tagLine: String,
+        ranks: Object,
+        matchHistory: Array,
+        lastSync: Date
+      },
+      accessToken: String,
+      refreshToken: String,
+      lastSync: Date
+    },
+    twitch: {
+      connected: { type: Boolean, default: false },
+      data: {
+        id: String,
+        login: String,
+        displayName: String,
+        followerCount: Number,
+        streamStats: Object,
+        lastSync: Date
+      },
+      accessToken: String,
+      refreshToken: String,
+      lastSync: Date
+    }
+  },
+  gatescore: {
+    overall: { type: Number, default: 0 },
+    breakdown: {
+      discord: { type: Number, default: 0 },
+      steam: { type: Number, default: 0 },
+      epic: { type: Number, default: 0 },
+      riot: { type: Number, default: 0 },
+      twitch: { type: Number, default: 0 }
+    },
+    lastCalculated: Date
+  },
   createdAt: {
     type: Date,
     default: Date.now
