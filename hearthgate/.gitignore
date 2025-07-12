@@ -1,0 +1,6 @@
+# Gatescore sensitive data
+backend/.env
+backend/.env.local
+backend/.env.production
+**/gatescore-api-keys.json
+
