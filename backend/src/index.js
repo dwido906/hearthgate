@@ -66,9 +66,13 @@ app.use((err, req, res, next) => {
 });
 
 // Database connection
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB', err));
+if (MONGODB_URI && MONGODB_URI !== 'mongodb://localhost:27017/hearthgate') {
+  mongoose.connect(MONGODB_URI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Could not connect to MongoDB', err));
+} else {
+  console.log('MongoDB not configured, running in demo mode without database');
+}
 
 // Start server
 app.listen(PORT, () => {
